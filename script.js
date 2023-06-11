@@ -2,7 +2,7 @@
 let expenses = localStorage.getItem('expenses');
 expenses = expenses ? JSON.parse(expenses) : [];
 
-// Function to render the expense list
+// Function to render the expense lists
 function renderExpenses() {
   const expenseList = document.getElementById('expenseList');
   expenseList.innerHTML = '';
