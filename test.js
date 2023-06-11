@@ -1,68 +1,205 @@
-function updateLastUserActivityTime(posts) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const lastActivityTime = new Date().toISOString();
-        resolve(lastActivityTime);
-      }, 1000);
-    });
+function getButter() {
+
+  return new Promise((resolve, reject) => {
+ 
+   // Simulating an asynchronous operation
+ 
+   setTimeout(() => {
+ 
+    const butter = "Butter";
+ 
+    resolve(butter);
+ 
+   }, 2000);
+ 
+  });
+ 
+ }
+ 
+ 
+ 
+ async function getColdDrinks() {
+ 
+  try {
+ 
+   const butter = await getButter();
+ 
+   console.log("Husband got", butter);
+ 
+   console.log("Husband is getting cold drinks...");
+ 
+   // Simulating an asynchronous operation
+ 
+   return new Promise((resolve, reject) => {
+ 
+    setTimeout(() => {
+ 
+     const coldDrinks = ["Cola", "Lemonade", "Iced Tea"];
+ 
+     resolve(coldDrinks);
+ 
+    }, 3000);
+ 
+   });
+ 
+  } catch (error) {
+ 
+   console.log("Error:", error);
+ 
   }
-  
-  function createPost(post) {
-    return new Promise((resolve, reject) => {
-      // Simulating asynchronous post creation
-      setTimeout(() => {
-        const newPost = { ...post };
-        resolve(newPost);
-      }, 200);
-    });
+ 
+ }
+ 
+ 
+ 
+ getColdDrinks()
+ 
+  .then((coldDrinks) => {
+ 
+   console.log("Husband got the following cold drinks:", coldDrinks);
+ 
+  })
+ 
+  .catch((error) => {
+ 
+   console.log("Error:", error);
+ 
+  });
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ // Simulated database object
+ 
+ const database = {
+ 
+  posts: []
+ 
+ };
+ 
+ 
+ 
+ function savePost(post) {
+ 
+  return new Promise((resolve, reject) => {
+ 
+   // Simulating an asynchronous operation
+ 
+   setTimeout(() => {
+ 
+    database.posts.push(post);
+ 
+    resolve(post);
+ 
+   }, 2000);
+ 
+  });
+ 
+ }
+ 
+ 
+ 
+ function removePost(postId) {
+ 
+  return new Promise((resolve, reject) => {
+ 
+   // Simulating an asynchronous operation
+ 
+   setTimeout(() => {
+ 
+    const index = database.posts.findIndex((post) => post.id === postId);
+ 
+    if (index !== -1) {
+ 
+     const deletedPost = database.posts.splice(index, 1);
+ 
+     resolve(deletedPost);
+ 
+    } else {
+ 
+     reject(new Error("Post not found"));
+ 
+    }
+ 
+   }, 2000);
+ 
+  });
+ 
+ }
+ 
+ 
+ 
+ async function createPost(post) {
+ 
+  try {
+ 
+   console.log("Creating post...");
+ 
+   const savedPost = await savePost(post);
+ 
+   console.log("Post created:", savedPost);
+ 
+   return savedPost;
+ 
+  } catch (error) {
+ 
+   console.log("Error:", error);
+ 
   }
-  
-  function deletePost(postId) {
-    return new Promise((resolve, reject) => {
-      // Simulating asynchronous post deletion
-      setTimeout(() => {
-        const deletedPostId = postId;
-        resolve(deletedPostId);
-      }, 300);
-    });
+ 
+ }
+ 
+ 
+ 
+ async function deletePost(postId) {
+ 
+  try {
+ 
+   console.log("Deleting post...");
+ 
+   const deletedPost = await removePost(postId);
+ 
+   console.log("Post deleted:", deletedPost);
+ 
+   return deletedPost;
+ 
+  } catch (error) {
+ 
+   console.log("Error:", error);
+ 
   }
-  
-  // Usage example:
-  const posts = [];
-  const user = { lastActivityTime: null };
-  
-  function executePostCreationFlow(post) {
-    createPost(post)
-      .then((createdPost) => {
-        posts.push(createdPost);
-        return Promise.all([updateLastUserActivityTime(posts), createdPost]);
-      })
-      .then(([lastActivityTime, createdPost]) => {
-        user.lastActivityTime = lastActivityTime;
-        console.log('All posts:', posts);
-        console.log('Last activity time:', lastActivityTime);
-        return deletePost(createdPost.id);
-      })
-      .then((deletedPostId) => {
-        const deletedPostIndex = posts.findIndex((post) => post.id === deletedPostId);
-        if (deletedPostIndex !== -1) {
-          posts.splice(deletedPostIndex, 1);
-          console.log('Posts after deletion:', posts);
-        } else {
-          console.log('Failed to find and delete the last post');
-        }
-      })
-      .catch((error) => {
-        console.error('Error occurred:', error);
-      });
-  }
-  
-  // Example usage
-  const post1 = { id: 1, content: 'Post 1' };
-  const post2 = { id: 2, content: 'Post 2' };
-  const post3 = { id: 3, content: 'Post 3' };
-  
-  executePostCreationFlow(post1);
-  executePostCreationFlow(post2);
-  executePostCreationFlow(post3);
-  
+ 
+ }
+ 
+ 
+ 
+ // Example usage
+ 
+ async function exampleUsage() {
+ 
+  const newPost = {
+ 
+   id: 1,
+ 
+   title: "Hello, World!",
+ 
+   content: "This is my first post."
+ 
+  };
+ 
+ 
+ 
+  await createPost(newPost);
+ 
+  await deletePost(1);
+ 
+ }
+ 
+ 
+ 
+ exampleUsage();
+ 
+ 
