@@ -28,7 +28,7 @@ function renderExpenses() {
 
 // Function to delete an expense
 function deleteExpense(index) {
-  expenses.splice(index, 1);
+  expenses.splice(index, 1);// 1-0
   localStorage.setItem('expenses', JSON.stringify(expenses));
   renderExpenses();
 }
